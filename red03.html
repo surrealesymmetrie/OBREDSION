@@ -35,10 +35,26 @@
       margin-top: 30px;
       font-size: 1.5em;
     }
-    audio {
+    #player {
       width: 80%;
-      margin: 10px auto;
+      margin: 20px auto;
       display: block;
+    }
+    ul.playlist {
+      list-style: none;
+      padding: 0;
+      margin: 20px auto;
+      width: 60%;
+      text-align: left;
+    }
+    ul.playlist li {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+    }
+    ul.playlist li.active {
+      background: rgba(255,0,0,0.2);
+      font-weight: bold;
     }
     .next {
       margin: 30px;
@@ -61,49 +77,63 @@
 
   <h3>Kapitel III – mein Leid</h3>
 
-  <audio id="track1" controls preload="auto">
-    <source src="red03-1.mp3" type="audio/mpeg">
-    PRUDENCE
-  </audio>
-  <audio id="track2" controls preload="auto">
-    <source src="red03-2.mp3" type="audio/mpeg">
-    PHILINE
-  </audio>
-  <audio id="track3" controls preload="auto">
-    <source src="red03-3.mp3" type="audio/mpeg">
-    RYNN
-  </audio>
+  <!-- EINZIGER PLAYER -->
+  <audio id="player" controls preload="auto"></audio>
+
+  <!-- PLAYLIST -->
+  <ul class="playlist" id="playlist">
+    <li data-src="red03-1.mp3">PRUDENCE</li>
+    <li data-src="red03-2.mp3">PHILINE</li>
+    <li data-src="red03-3.mp3">RYNN</li>
+  </ul>
 
   <div class="next">
     <a href="red04.html">Kapitel IV</a>
   </div>
 
   <script>
-    // Automatisch zum nächsten Track springen
-    const tracks = [
-      document.getElementById('track1'),
-      document.getElementById('track2'),
-      document.getElementById('track3')
-    ];
-    tracks.forEach((track, i) => {
-      track.addEventListener('ended', () => {
-        if (i + 1 < tracks.length) {
-          tracks[i+1].play();
-        }
+    const player = document.getElementById('player');
+    const playlist = document.getElementById('playlist');
+    const tracks = playlist.getElementsByTagName('li');
+    let current = 0;
+
+    function loadTrack(index) {
+      for (let i = 0; i < tracks.length; i++) {
+        tracks[i].classList.remove('active');
+      }
+      tracks[index].classList.add('active');
+      player.src = tracks[index].getAttribute('data-src');
+      player.load();
+
+      // gespeicherte Position laden
+      const saved = localStorage.getItem('chapter3-track' + index);
+      if (saved) player.currentTime = saved;
+    }
+
+    function playTrack(index) {
+      loadTrack(index);
+      player.play();
+    }
+
+    for (let i = 0; i < tracks.length; i++) {
+      tracks[i].addEventListener('click', () => {
+        current = i;
+        playTrack(current);
       });
+    }
+
+    player.addEventListener('ended', () => {
+      current++;
+      if (current >= tracks.length) current = 0;
+      playTrack(current);
     });
 
-    // Fortschritt speichern & laden
-    tracks.forEach((track, i) => {
-      const key = 'chapter3-track' + i;
-      track.addEventListener('timeupdate', () => {
-        localStorage.setItem(key, track.currentTime);
-      });
-      track.addEventListener('loadedmetadata', () => {
-        const saved = localStorage.getItem(key);
-        if (saved) track.currentTime = saved;
-      });
+    player.addEventListener('timeupdate', () => {
+      localStorage.setItem('chapter3-track' + current, player.currentTime);
     });
+
+    // Ersten Track laden
+    loadTrack(current);
   </script>
 </body>
 </html>
