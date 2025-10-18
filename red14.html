@@ -7,50 +7,48 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Cinzel Decorative', serif;
       background: url('kiss.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: black;
+      font-family: 'Calisto MT', serif;
+      color: white;
       text-align: center;
     }
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5); /* halbtransparentes Schwarz */
-      z-index: 0;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
+    .player-box {
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 8% auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
     }
     h1 {
+      font-family: 'Cinzel Decorative', serif;
       font-size: 3em;
+      margin: 0;
+      color: white;
     }
     h1 .red {
       color: red;
     }
     h2 {
       font-family: 'Almendra Display', serif;
-      color: red;
+      color: white;
       margin-top: -10px;
     }
     .cover {
       margin: 20px auto;
-      width: 300px;
-      height: 300px;
+      width: 250px;
+      height: 250px;
       background: url('squarecover.png') no-repeat center center;
       background-size: cover;
+      border-radius: 10px;
     }
     h3 {
       margin-top: 30px;
       font-size: 1.5em;
-      color: white;
     }
     #player {
-      width: 80%;
+      width: 100%;
       margin: 20px auto;
       display: block;
     }
@@ -58,52 +56,56 @@
       list-style: none;
       padding: 0;
       margin: 20px auto;
-      width: 60%;
+      width: 80%;
       text-align: left;
-      color: white;
     }
     ul.playlist li {
       padding: 8px;
       cursor: pointer;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
     }
     ul.playlist li.active {
-      background: rgba(255,0,0,0.2);
+      background: rgba(255,0,0,0.3);
       font-weight: bold;
     }
     .next {
-      margin: 30px;
+      margin-top: 30px;
     }
     .next a {
       text-decoration: none;
       background: red;
       color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 12px 24px;
+      border-radius: 8px;
       font-family: 'Almendra Display', serif;
+      font-size: 1.2em;
+      transition: background 0.3s;
+    }
+    .next a:hover {
+      background: darkred;
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="content">
+  <div class="player-box">
     <h1>OB<span class="red">RED</span>SION</h1>
-    <h2>im Finden verloren</h2>
+    <h2>im Gefundenwerden verloren</h2>
 
     <div class="cover"></div>
 
-    <h3>Kapitel XIV – Der Mond muss lernen allein zu leuchten</h3>
+    <h3>Kapitel XIV – der Mond muss lernen allein zu leuchten</h3>
 
     <!-- EINZIGER PLAYER -->
     <audio id="player" controls preload="auto"></audio>
 
-    <!-- PLAYLIST -->
+    <!-- PLAYLIST (nur ein Track) -->
     <ul class="playlist" id="playlist">
       <li data-src="red14.mp3">AUDRINA</li>
     </ul>
 
+    <!-- Button zur externen Website -->
     <div class="next">
-      <a href="index.html">Zurück zum Index</a>
+      <a href="https://surrealesymmetrie.github.io/FAIRYFALLS/" target="_blank">FAIRYFALLS besuchen</a>
     </div>
   </div>
 
