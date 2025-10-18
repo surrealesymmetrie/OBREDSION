@@ -1,2 +1,2 @@
 # OBREDSION
-[Hör]Buchh-Hybrid - Höranteil
+[Hör]Buch-Hybrid - Höranteil
